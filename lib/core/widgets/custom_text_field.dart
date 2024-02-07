@@ -35,10 +35,12 @@ class CustomTextField extends StatelessWidget {
           hintText: hint,
           hintStyle: TextStyle(color: Colors.black.withAlpha(80)),
           border: InputBorder.none,
-          prefix: Container(
-            height: 15,
-            width: 18,
-            margin: const EdgeInsets.only(left: 10, right: 15),
+          prefixIconConstraints: const BoxConstraints(
+            maxHeight: 20,
+            maxWidth: 40,
+          ),
+          prefixIcon: Container(
+            padding: const EdgeInsets.only(left: 10, right: 10),
             child: prefix != null
                 ? SvgPicture.asset(
                     prefix!,

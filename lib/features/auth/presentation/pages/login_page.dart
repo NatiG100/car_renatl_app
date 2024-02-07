@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     const CustomTextField(
                       hint: 'Password',
-                      prefix: 'assets/icons/email.svg',
+                      prefix: 'assets/icons/password.svg',
                       isPassword: true,
                     ),
                     _loginOptions(context),

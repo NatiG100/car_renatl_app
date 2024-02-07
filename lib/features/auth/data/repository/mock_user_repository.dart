@@ -6,6 +6,7 @@ import 'package:car_renatl_app/features/auth/domain/repository/user_repository.d
 class MockUserRepository implements UserRepository {
   List<UserEntity> users;
   bool loggedIn;
+  UserEntity? loggedInUser;
   MockUserRepository({this.users = const [], this.loggedIn = false});
   @override
   Future<DataState<UserEntity>> addUser(UserEntity user) {
@@ -21,6 +22,7 @@ class MockUserRepository implements UserRepository {
       throw Error();
     } else {
       loggedIn = true;
+      loggedInUser = userFound;
       return Future.value(DataSuccess(data: userFound));
     }
   }
@@ -57,5 +59,10 @@ class MockUserRepository implements UserRepository {
         title: "Successful",
       ),
     ));
+  }
+  
+  @override
+  Future<DataState<UserEntity>> me(UserEntity user) {
+    
   }
 }
