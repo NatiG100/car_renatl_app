@@ -8,7 +8,7 @@ abstract class RemoteAuthState extends Equatable {
   const RemoteAuthState({this.user, this.error});
 
   @override
-  List<Object> get props => [user!, error!];
+  List<Object?> get props => [user, error];
 }
 
 class RemoteAuthLoading extends RemoteAuthState {

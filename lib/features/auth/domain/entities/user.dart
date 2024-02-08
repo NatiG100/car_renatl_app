@@ -22,9 +22,26 @@ class UserEntity extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         fullName,
         emailAddress,
         mobileNumber,
-        id,
+        profileImageUrl,
+        password,
+        confirmPassword,
+        isVerified,
       ];
+  @override
+  String toString() {
+    return '''
+id: $id,
+name: $fullName,
+email: $emailAddress,
+mobileNumber: $mobileNumber,
+profileImageUrl: $profileImageUrl,
+password: $password,
+confirm: $confirmPassword,
+isVerified:  $isVerified,
+''';
+  }
 }

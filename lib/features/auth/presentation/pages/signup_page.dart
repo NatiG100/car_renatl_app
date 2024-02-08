@@ -2,9 +2,10 @@ import 'package:car_renatl_app/config/theme/app_theme.dart';
 import 'package:car_renatl_app/core/widgets/custom_button.dart';
 import 'package:car_renatl_app/core/widgets/custom_text_field.dart';
 import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_article_event.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/widgets/logo_header.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,19 +29,19 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   _onEmailChange(String value) {
-    _email = _email;
+    _email = value;
   }
 
   _onFullNameChange(String value) {
-    _fullName = _email;
+    _fullName = value;
   }
 
   _onMobileNumberChange(String value) {
-    _mobileNumber = _email;
+    _mobileNumber = value;
   }
 
   _onConFirmPasswordChange(String value) {
-    _confirmPassword = _email;
+    _confirmPassword = value;
   }
 
   _onRegisterPressed() {
@@ -55,7 +56,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
-    print("logging in");
+  }
+
+  _navigateToSignInPage() {
+    Navigator.of(context).pushNamed('/login');
   }
 
   @override
@@ -74,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     formTitle(),
                     CustomTextField(
                       hint: 'Full Name',
-                      prefix: 'assets/icons/email.svg',
+                      prefix: 'assets/icons/user.svg',
                       text: _fullName,
                       onChange: _onFullNameChange,
                     ),
@@ -86,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     CustomTextField(
                       hint: 'Mobile Number',
-                      prefix: 'assets/icons/email.svg',
+                      prefix: 'assets/icons/phone.svg',
                       text: _mobileNumber,
                       onChange: _onMobileNumberChange,
                     ),
@@ -99,11 +103,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     CustomTextField(
                       hint: 'Confirm Password',
-                      prefix: 'assets/icons/email.svg',
+                      prefix: 'assets/icons/password.svg',
                       text: _confirmPassword,
                       onChange: _onConFirmPasswordChange,
                     ),
-                    _loginOptions(context),
+                    Container(
+                      margin: const EdgeInsets.only(top: 15, bottom: 15),
+                      child: _legalNoticeSection(context),
+                    ),
                     CustomButton(
                       text: "Register",
                       onPressed: _onRegisterPressed,
@@ -172,8 +179,11 @@ class _SignUpPageState extends State<SignUpPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Don't have an account? "),
-              TextButton(onPressed: () {}, child: const Text("Register now"))
+              const Text("Already have an account? "),
+              TextButton(
+                onPressed: _navigateToSignInPage,
+                child: const Text("Sign in"),
+              )
             ],
           )
         ],
@@ -181,30 +191,27 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Row _loginOptions(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Checkbox(
-              value: true,
-              shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.circular(2)),
-              onChanged: (bool? x) {},
-              activeColor: Theme.of(context).primaryColor,
-            ),
-            Text(
-              "Remember Me",
-              style: TextStyle(color: Colors.black.withAlpha(180)),
-            )
-          ],
-        ),
-        const Text(
-          "Forgot password?",
-          style: TextStyle(color: Colors.deepOrangeAccent),
-        )
-      ],
+  RichText _legalNoticeSection(BuildContext context) {
+    TextStyle defaultStyle = const TextStyle(color: Colors.black);
+    TextStyle linkStyle = TextStyle(color: Theme.of(context).primaryColor);
+    return RichText(
+      text: TextSpan(
+        style: defaultStyle,
+        children: <TextSpan>[
+          const TextSpan(text: 'By creating account you agree to our '),
+          TextSpan(
+            text: "terms & conditions ",
+            style: linkStyle,
+            recognizer: TapGestureRecognizer()..onTap = () {},
+          ),
+          const TextSpan(text: "and "),
+          TextSpan(
+            text: "privacy policy",
+            style: linkStyle,
+            recognizer: TapGestureRecognizer()..onTap = () {},
+          )
+        ],
+      ),
     );
   }
 

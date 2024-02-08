@@ -6,8 +6,8 @@ import 'package:car_renatl_app/features/auth/domain/usecases/logout_user.dart';
 import 'package:car_renatl_app/features/auth/domain/usecases/register_user.dart';
 import 'package:car_renatl_app/features/auth/domain/usecases/verify_user.dart';
 import 'package:car_renatl_app/features/auth/domain/usecases/who_am_i.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_article_event.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_article_state.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 
 class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   final LoginUseCase _loginUseCase;

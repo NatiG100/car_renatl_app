@@ -5,10 +5,10 @@ import 'package:car_renatl_app/features/auth/domain/repository/user_repository.d
 import 'package:dio/dio.dart';
 
 class MockUserRepository implements UserRepository {
-  List<UserEntity> users;
+  List<UserEntity> users = [];
   bool loggedIn;
   UserEntity? loggedInUser;
-  MockUserRepository({this.users = const [], this.loggedIn = false});
+  MockUserRepository({this.loggedIn = false});
   @override
   Future<DataState<UserEntity>> addUser(UserEntity user) {
     users.add(user);

@@ -1,8 +1,8 @@
 import 'package:car_renatl_app/config/routes/routes.dart';
 import 'package:car_renatl_app/config/theme/app_theme.dart';
 import 'package:car_renatl_app/core/widgets/full_loading.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_article_event.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_article_state.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/login_page.dart';
 import 'package:car_renatl_app/features/injection_container.dart';
@@ -26,8 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: theme(),
-        onGenerateRoute: AppRoutes.onGenerateRoute,
-        home: _authRender(context),
+        onGenerateRoute: AppRoutes(context: context).onGenerateRoute,
       ),
     );
   }
