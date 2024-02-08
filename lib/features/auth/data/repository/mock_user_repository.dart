@@ -2,6 +2,7 @@ import 'package:car_renatl_app/core/dto/message.dart';
 import 'package:car_renatl_app/core/resources/data_state.dart';
 import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
 import 'package:car_renatl_app/features/auth/domain/repository/user_repository.dart';
+import 'package:dio/dio.dart';
 
 class MockUserRepository implements UserRepository {
   List<UserEntity> users;
@@ -16,10 +17,17 @@ class MockUserRepository implements UserRepository {
 
   @override
   Future<DataState<UserEntity>> login(UserEntity user) {
-    var userFound =
-        users.where((usr) => user.emailAddress == usr.emailAddress).toList()[0];
+    var filteredUsers =
+        users.where((usr) => user.emailAddress == usr.emailAddress).toList();
+
+    if (filteredUsers.isEmpty) {
+      return Future.value(
+          DataFailed(error: DioException(requestOptions: RequestOptions())));
+    }
+    var userFound = filteredUsers[0];
     if (userFound.password != user.password) {
-      throw Error();
+      return Future.value(
+          DataFailed(error: DioException(requestOptions: RequestOptions())));
     } else {
       loggedIn = true;
       loggedInUser = userFound;
@@ -51,18 +59,14 @@ class MockUserRepository implements UserRepository {
   }
 
   @override
-  Future<DataState<ResponseMessage>> verifyuser(String verificationCode) {
-    return Future.value(DataSuccess(
-      data: ResponseMessage(
-        id: "adfasdf",
-        message: "Successfully activated",
-        title: "Successful",
-      ),
-    ));
+  Future<DataState<UserEntity>> verifyuser(String verificationCode) {
+    return Future.value(DataSuccess(data: loggedInUser));
   }
-  
+
   @override
-  Future<DataState<UserEntity>> me(UserEntity user) {
-    
+  Future<DataState<UserEntity>> me() {
+    return Future.value(
+      DataSuccess(data: loggedInUser),
+    );
   }
 }

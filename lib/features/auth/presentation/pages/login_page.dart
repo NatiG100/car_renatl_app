@@ -1,12 +1,47 @@
 import 'package:car_renatl_app/config/theme/app_theme.dart';
 import 'package:car_renatl_app/core/widgets/custom_button.dart';
 import 'package:car_renatl_app/core/widgets/custom_text_field.dart';
+import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_article_event.dart';
+import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/widgets/logo_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String _email = "";
+  String _password = "";
+  bool rememberMe = false;
+  _onPasswordChange(String value) {
+    _password = value;
+  }
+
+  _onEmailChange(String value) {
+    _email = _email;
+  }
+
+  _onLoginPressed() {
+    BlocProvider.of<AuthBloc>(context).add(
+      LoginEvent(
+        UserEntity(
+          emailAddress: _email,
+          password: _password,
+        ),
+      ),
+    );
+    print("logging in");
+  }
+  _navigateToRegisterPage(){
+    Navigator.of(context).push()
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +57,23 @@ class LoginPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     formTitle(),
-                    const CustomTextField(
+                    CustomTextField(
                       hint: 'Email',
                       prefix: 'assets/icons/email.svg',
+                      text: _email,
+                      onChange: _onEmailChange,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
                       hint: 'Password',
                       prefix: 'assets/icons/password.svg',
                       isPassword: true,
+                      text: _password,
+                      onChange: _onPasswordChange,
                     ),
                     _loginOptions(context),
                     CustomButton(
                       text: "Login",
-                      onPressed: () {},
+                      onPressed: _onLoginPressed,
                     ),
                     _loginBottomArea(),
                   ],
@@ -118,7 +157,8 @@ class LoginPage extends StatelessWidget {
             Checkbox(
               value: true,
               shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.circular(2)),
+                borderRadius: BorderRadius.circular(2),
+              ),
               onChanged: (bool? x) {},
               activeColor: Theme.of(context).primaryColor,
             ),
