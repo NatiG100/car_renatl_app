@@ -39,8 +39,9 @@ class _LoginPageState extends State<LoginPage> {
     );
     print("logging in");
   }
-  _navigateToRegisterPage(){
-    Navigator.of(context).push()
+
+  _navigateToRegisterPage() {
+    Navigator.of(context).pushNamed('/register');
   }
 
   @override
@@ -140,7 +141,10 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text("Don't have an account? "),
-              TextButton(onPressed: () {}, child: const Text("Register now"))
+              TextButton(
+                onPressed: _navigateToRegisterPage,
+                child: const Text("Register now"),
+              )
             ],
           )
         ],
