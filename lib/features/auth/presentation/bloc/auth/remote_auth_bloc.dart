@@ -33,6 +33,7 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   }
   void onUserRegister(
       UserRegisterEvent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthLoading());
     final dataState = await _registerUserUseCase(params: event.user);
     if (dataState is DataSuccess && dataState.data != null) {
       emit(RemoteAuthInactive(dataState.data!));
@@ -44,6 +45,7 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
 
   void onUserProfileChange(
       UserProfileChangedEvent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthLoading());
     final dataState = await _changeUserProfileUseCase(params: event.user);
     if (dataState is DataSuccess && dataState.data != null) {
       switch (dataState.data?.isVerified) {
@@ -63,6 +65,7 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   }
 
   void onWhoAmI(WhoAmIevent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthLoading());
     final dataState = await _whoAmIUseCase();
     if (dataState is DataSuccess) {
       switch (dataState.data?.isVerified) {
@@ -83,6 +86,7 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   }
 
   void onLogIn(LoginEvent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthLoading());
     final dataState = await _loginUseCase(params: event.user);
     if (dataState is DataSuccess && dataState.data != null) {
       switch (dataState.data?.isVerified) {
@@ -102,6 +106,7 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   }
 
   void onLogout(LogoutEvent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthLoading());
     final dataState = await _logoutUseCase();
     if (dataState is DataSuccess && dataState.data != null) {
       emit(const RemoteAuthLoggedOut());
@@ -112,6 +117,7 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   }
 
   void onActivate(ActivateEvent event, Emitter<RemoteAuthState> emit) async {
+    emit(const RemoteAuthLoading());
     final dataState = await _verifyUserUseCase(params: event.verificationCode);
     if (dataState is DataSuccess && dataState.data != null) {
       emit(RemoteAuthLoggedIn(dataState.data!));

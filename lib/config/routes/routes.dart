@@ -3,6 +3,7 @@ import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/login_page.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:car_renatl_app/features/auth/presentation/pages/verify_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,12 +33,12 @@ class AppRoutes {
           return const FullLoading();
         }
         if (state is RemoteAuthInactive) {
-          return const Text("Activate account");
+          return const VerifyPage();
         }
         if (state is RemoteAuthLoggedOut) {
           return page;
         }
-        if (state is RemoteAuthLoggedOut) {
+        if (state is RemoteAuthLoggedIn) {
           return const Text("Main page");
         }
         return const SizedBox();

@@ -12,7 +12,11 @@ class MockUserRepository implements UserRepository {
   @override
   Future<DataState<UserEntity>> addUser(UserEntity user) {
     users.add(user);
-    return Future.value(DataSuccess(data: user));
+    loggedInUser = user;
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => DataSuccess(data: user),
+    );
   }
 
   @override
@@ -21,29 +25,39 @@ class MockUserRepository implements UserRepository {
         users.where((usr) => user.emailAddress == usr.emailAddress).toList();
 
     if (filteredUsers.isEmpty) {
-      return Future.value(
-          DataFailed(error: DioException(requestOptions: RequestOptions())));
+      return Future.delayed(
+        const Duration(seconds: 1),
+        () => DataFailed(error: DioException(requestOptions: RequestOptions())),
+      );
     }
     var userFound = filteredUsers[0];
     if (userFound.password != user.password) {
-      return Future.value(
-          DataFailed(error: DioException(requestOptions: RequestOptions())));
+      return Future.delayed(
+        const Duration(seconds: 1),
+        () => DataFailed(error: DioException(requestOptions: RequestOptions())),
+      );
     } else {
       loggedIn = true;
       loggedInUser = userFound;
-      return Future.value(DataSuccess(data: userFound));
+      return Future.delayed(
+        const Duration(seconds: 1),
+        () => DataSuccess(data: userFound),
+      );
     }
   }
 
   @override
   Future<DataState<ResponseMessage>> logout() {
     loggedIn = false;
-    return Future.value(DataSuccess(
-        data: ResponseMessage(
-      id: "asdf",
-      message: "Successfully logged Out",
-      title: "Success",
-    )));
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => DataSuccess(
+          data: ResponseMessage(
+        id: "asdf",
+        message: "Successfully logged Out",
+        title: "Success",
+      )),
+    );
   }
 
   @override
@@ -54,19 +68,26 @@ class MockUserRepository implements UserRepository {
       throw Error();
     } else {
       int userIndex = users.indexOf(userFound);
-      return Future.value(DataSuccess(data: users[userIndex]));
+      return Future.delayed(
+        const Duration(seconds: 1),
+        () => DataSuccess(data: users[userIndex]),
+      );
     }
   }
 
   @override
   Future<DataState<UserEntity>> verifyuser(String verificationCode) {
-    return Future.value(DataSuccess(data: loggedInUser));
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => DataSuccess(data: loggedInUser),
+    );
   }
 
   @override
   Future<DataState<UserEntity>> me() {
-    return Future.value(
-      DataSuccess(data: loggedInUser),
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => DataSuccess(data: loggedInUser),
     );
   }
 }

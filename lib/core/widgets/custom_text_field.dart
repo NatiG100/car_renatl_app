@@ -35,7 +35,7 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         style: const TextStyle(fontSize: 20),
         obscureText: isPassword,
-        controller: TextEditingController(text: text),
+        controller: c,
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(color: Colors.black.withAlpha(80)),

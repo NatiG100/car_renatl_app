@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String _mobileNumber = "";
   String _password = "";
   String _confirmPassword = "";
-  bool rememberMe = false;
+  bool agreed = false;
   final TextEditingController _fullNameC = TextEditingController();
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _mobileNumberC = TextEditingController();

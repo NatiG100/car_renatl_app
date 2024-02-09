@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-
   @override
   void initState() {
     _passwordC.addListener(_onPasswordChange);
@@ -48,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
     _passwordC.dispose();
     super.dispose();
   }
-  
+
   _onLoginPressed() {
     BlocProvider.of<AuthBloc>(context).add(
       LoginEvent(
@@ -91,7 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                       text: _password,
                       c: _passwordC,
                     ),
-                    _loginOptions(context),
+                    Container(
+                      margin: const EdgeInsets.only(top: 15, bottom: 15),
+                      child: _loginOptions(context),
+                    ),
                     CustomButton(
                       text: "Login",
                       onPressed: _onLoginPressed,
