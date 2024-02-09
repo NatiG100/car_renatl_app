@@ -1,4 +1,3 @@
-import 'package:car_renatl_app/core/widgets/full_loading.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/login_page.dart';
@@ -29,13 +28,10 @@ class AppRoutes {
         if (state is RemoteAuthError) {
           return const Text("Error");
         }
-        if (state is RemoteAuthLoading) {
-          return const FullLoading();
-        }
         if (state is RemoteAuthInactive) {
           return const VerifyPage();
         }
-        if (state is RemoteAuthLoggedOut) {
+        if (state is RemoteAuthLoggedOut || state is RemoteAuthLoading) {
           return page;
         }
         if (state is RemoteAuthLoggedIn) {

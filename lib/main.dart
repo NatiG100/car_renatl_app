@@ -1,10 +1,7 @@
 import 'package:car_renatl_app/config/routes/routes.dart';
 import 'package:car_renatl_app/config/theme/app_theme.dart';
-import 'package:car_renatl_app/core/widgets/full_loading.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
-import 'package:car_renatl_app/features/auth/presentation/pages/login_page.dart';
 import 'package:car_renatl_app/features/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,10 +12,35 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  OverlayEntry? loadingOverlayEntry;
+  _createLoadingOverlay(BuildContext context) {
+    loadingOverlayEntry = OverlayEntry(builder: (BuildContext context) {
+      return Positioned(
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        child: Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withAlpha(120),
+            ),
+          ),
+        ),
+      );
+    });
+    Overlay.of(context).insert(loadingOverlayEntry!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthBloc>(
@@ -27,30 +49,11 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: theme(),
         onGenerateRoute: AppRoutes(context: context).onGenerateRoute,
+        builder: (context, child) {
+          _createLoadingOverlay(context);
+          return child ?? const SizedBox();
+        },
       ),
     );
   }
-}
-
-Widget _authRender(BuildContext context) {
-  return BlocBuilder<AuthBloc, RemoteAuthState>(
-    builder: (_, state) {
-      if (state is RemoteAuthError) {
-        return const Text("Error");
-      }
-      if (state is RemoteAuthLoading) {
-        return const FullLoading();
-      }
-      if (state is RemoteAuthInactive) {
-        return const Text("Activate account");
-      }
-      if (state is RemoteAuthLoggedOut) {
-        return const LoginPage();
-      }
-      if (state is RemoteAuthLoggedOut) {
-        return const Text("Main page");
-      }
-      return const SizedBox();
-    },
-  );
 }
