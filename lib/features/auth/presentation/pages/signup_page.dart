@@ -24,24 +24,62 @@ class _SignUpPageState extends State<SignUpPage> {
   String _password = "";
   String _confirmPassword = "";
   bool rememberMe = false;
-  _onPasswordChange(String value) {
-    _password = value;
+  final TextEditingController _fullNameC = TextEditingController();
+  final TextEditingController _emailC = TextEditingController();
+  final TextEditingController _mobileNumberC = TextEditingController();
+  final TextEditingController _passwordC = TextEditingController();
+  final TextEditingController _confirmPasswordC = TextEditingController();
+  _onPasswordChange() {
+    setState(() {
+      _password = _passwordC.text;
+    });
   }
 
-  _onEmailChange(String value) {
-    _email = value;
+  _onEmailChange() {
+    setState(() {
+      _email = _emailC.text;
+    });
   }
 
-  _onFullNameChange(String value) {
-    _fullName = value;
+  _onFullNameChange() {
+    setState(() {
+      _fullName = _fullNameC.text;
+    });
   }
 
-  _onMobileNumberChange(String value) {
-    _mobileNumber = value;
+  _onMobileNumberChange() {
+    setState(() {
+      _mobileNumber = _mobileNumberC.text;
+    });
   }
 
-  _onConFirmPasswordChange(String value) {
-    _confirmPassword = value;
+  _onConFirmPasswordChange() {
+    setState(() {
+      _confirmPassword = _confirmPasswordC.text;
+    });
+  }
+
+  @override
+  @override
+  void initState() {
+    _fullNameC.addListener(_onFullNameChange);
+    _emailC.addListener(_onEmailChange);
+    _mobileNumberC.addListener(_onMobileNumberChange);
+    _passwordC.addListener(_onPasswordChange);
+    _confirmPasswordC.addListener(_onConFirmPasswordChange);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _fullNameC.dispose();
+    _emailC.dispose();
+    _mobileNumberC.dispose();
+    _passwordC.dispose();
+    _confirmPasswordC.dispose();
+
+    super.dispose();
   }
 
   _onRegisterPressed() {
@@ -80,32 +118,32 @@ class _SignUpPageState extends State<SignUpPage> {
                       hint: 'Full Name',
                       prefix: 'assets/icons/user.svg',
                       text: _fullName,
-                      onChange: _onFullNameChange,
+                      c: _fullNameC,
                     ),
                     CustomTextField(
                       hint: 'Email',
                       prefix: 'assets/icons/email.svg',
                       text: _email,
-                      onChange: _onEmailChange,
+                      c: _emailC,
                     ),
                     CustomTextField(
                       hint: 'Mobile Number',
                       prefix: 'assets/icons/phone.svg',
                       text: _mobileNumber,
-                      onChange: _onMobileNumberChange,
+                      c: _mobileNumberC,
                     ),
                     CustomTextField(
                       hint: 'Password',
                       prefix: 'assets/icons/password.svg',
                       isPassword: true,
                       text: _password,
-                      onChange: _onPasswordChange,
+                      c: _passwordC,
                     ),
                     CustomTextField(
                       hint: 'Confirm Password',
                       prefix: 'assets/icons/password.svg',
                       text: _confirmPassword,
-                      onChange: _onConFirmPasswordChange,
+                      c: _confirmPasswordC,
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 15, bottom: 15),

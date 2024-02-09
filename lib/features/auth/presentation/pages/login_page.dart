@@ -1,11 +1,9 @@
 import 'package:car_renatl_app/config/theme/app_theme.dart';
 import 'package:car_renatl_app/core/widgets/custom_button.dart';
 import 'package:car_renatl_app/core/widgets/custom_text_field.dart';
-import 'package:car_renatl_app/core/widgets/full_loading.dart';
 import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 import 'package:car_renatl_app/features/auth/presentation/widgets/logo_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,14 +20,35 @@ class _LoginPageState extends State<LoginPage> {
   String _email = "";
   String _password = "";
   bool rememberMe = false;
-  _onPasswordChange(String value) {
-    _password = value;
+  final TextEditingController _emailC = TextEditingController();
+  final TextEditingController _passwordC = TextEditingController();
+  _onPasswordChange() {
+    setState(() {
+      _password = _passwordC.text;
+    });
   }
 
-  _onEmailChange(String value) {
-    _email = _email;
+  _onEmailChange() {
+    setState(() {
+      _email = _emailC.text;
+    });
   }
 
+
+  @override
+  void initState() {
+    _passwordC.addListener(_onPasswordChange);
+    _emailC.addListener(_onEmailChange);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailC.dispose();
+    _passwordC.dispose();
+    super.dispose();
+  }
+  
   _onLoginPressed() {
     BlocProvider.of<AuthBloc>(context).add(
       LoginEvent(
@@ -39,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-    print("logging in");
   }
 
   _navigateToRegisterPage() {
@@ -64,14 +82,14 @@ class _LoginPageState extends State<LoginPage> {
                       hint: 'Email',
                       prefix: 'assets/icons/email.svg',
                       text: _email,
-                      onChange: _onEmailChange,
+                      c: _emailC,
                     ),
                     CustomTextField(
                       hint: 'Password',
                       prefix: 'assets/icons/password.svg',
                       isPassword: true,
                       text: _password,
-                      onChange: _onPasswordChange,
+                      c: _passwordC,
                     ),
                     _loginOptions(context),
                     CustomButton(

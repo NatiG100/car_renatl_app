@@ -9,14 +9,14 @@ class CustomTextField extends StatelessWidget {
     this.suffix,
     this.isPassword = false,
     this.text = "",
-    required this.onChange,
+    required this.c,
   });
   final String? hint;
   final String? prefix;
   final Widget? suffix;
   final bool isPassword;
   final String text;
-  final Function(String value) onChange;
+  final TextEditingController c;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,6 @@ class CustomTextField extends StatelessWidget {
         style: const TextStyle(fontSize: 20),
         obscureText: isPassword,
         controller: TextEditingController(text: text),
-        onChanged: onChange,
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(color: Colors.black.withAlpha(80)),
