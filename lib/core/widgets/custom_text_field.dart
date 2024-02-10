@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
     required this.c,
     this.validator,
     this.autovalidateMode,
+    this.textInputType,
   });
   final String? hint;
   final String? prefix;
@@ -21,15 +22,17 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController c;
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: TextFormField(
+        keyboardType: textInputType,
         autovalidateMode: autovalidateMode,
         validator: validator,
-        style: const TextStyle(fontSize: 20),
+        style: const TextStyle(fontSize: 16),
         obscureText: isPassword,
         controller: c,
         decoration: InputDecoration(

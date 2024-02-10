@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _formSubmittedOnce = false;
   String _email = "";
   String _password = "";
-  bool rememberMe = false;
+  bool _rememberMe = false;
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passwordC = TextEditingController();
   _onPasswordChange() {
@@ -67,6 +67,12 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  _onRememberMeClicked(bool? value) {
+    setState(() {
+      _rememberMe = value ?? false;
+    });
+  }
+
   _navigateToRegisterPage() {
     Navigator.of(context).pushNamed('/register');
   }
@@ -77,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
         ? AutovalidateMode.onUserInteraction
         : AutovalidateMode.disabled;
   }
+
   @override
   Widget build(
     BuildContext context,
@@ -105,7 +112,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   Form _loginForm(BuildContext context) {
     return Form(
         key: _formKey,
@@ -124,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                 return validator.validate(label: 'Email', value: value);
               },
               autovalidateMode: _autovalidateMode,
+              textInputType: TextInputType.emailAddress,
             ),
             CustomTextField(
               hint: 'Password',
@@ -224,12 +231,14 @@ class _LoginPageState extends State<LoginPage> {
         Row(
           children: [
             Checkbox(
-              value: true,
+              value: _rememberMe,
               shape: BeveledRectangleBorder(
                 borderRadius: BorderRadius.circular(2),
               ),
-              onChanged: (bool? x) {},
+              onChanged: _onRememberMeClicked,
               activeColor: Theme.of(context).primaryColor,
+              side: BorderSide(
+                  width: 1, color: Theme.of(context).unselectedWidgetColor),
             ),
             Text(
               "Remember Me",

@@ -19,6 +19,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  bool _agree = false;
   bool _formSubmittedOnce = false;
   String _email = "";
   String _fullName = "";
@@ -103,6 +104,12 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  _onCheckboxClick(bool? value) {
+    setState(() {
+      _agree = value ?? false;
+    });
+  }
+
   _navigateToSignInPage() {
     Navigator.of(context).pushNamed('/login');
   }
@@ -172,6 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
               return validator.validate(label: 'email', value: value);
             },
             autovalidateMode: _autovalidateMode,
+            textInputType: TextInputType.emailAddress,
           ),
           CustomTextField(
             hint: 'Mobile Number',
@@ -186,6 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
               return validator.validate(label: 'Mobile Number', value: value);
             },
             autovalidateMode: _autovalidateMode,
+            textInputType: TextInputType.phone,
           ),
           CustomTextField(
             hint: 'Password',
@@ -223,6 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
           CustomButton(
             text: "Register",
             onPressed: _onRegisterPressed,
+            disabled: !_agree,
           ),
         ],
       ),
@@ -294,27 +304,46 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  RichText _legalNoticeSection(BuildContext context) {
+  Row _legalNoticeSection(BuildContext context) {
     TextStyle defaultStyle = const TextStyle(color: Colors.black);
     TextStyle linkStyle = TextStyle(color: Theme.of(context).primaryColor);
-    return RichText(
-      text: TextSpan(
-        style: defaultStyle,
-        children: <TextSpan>[
-          const TextSpan(text: 'By creating account you agree to our '),
-          TextSpan(
-            text: "terms & conditions ",
-            style: linkStyle,
-            recognizer: TapGestureRecognizer()..onTap = () {},
+    return Row(
+      children: [
+        Checkbox(
+          value: _agree,
+          shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(2),
           ),
-          const TextSpan(text: "and "),
-          TextSpan(
-            text: "privacy policy",
-            style: linkStyle,
-            recognizer: TapGestureRecognizer()..onTap = () {},
-          )
-        ],
-      ),
+          onChanged: _onCheckboxClick,
+          activeColor: Theme.of(context).primaryColor,
+          side: BorderSide(
+              width: 1, color: Theme.of(context).unselectedWidgetColor),
+        ),
+        const SizedBox(
+          width: 8,
+        ),
+        Expanded(
+          child: RichText(
+            text: TextSpan(
+              style: defaultStyle,
+              children: <TextSpan>[
+                const TextSpan(text: 'By creating account you agree to our '),
+                TextSpan(
+                  text: "terms & conditions ",
+                  style: linkStyle,
+                  recognizer: TapGestureRecognizer()..onTap = () {},
+                ),
+                const TextSpan(text: "and "),
+                TextSpan(
+                  text: "privacy policy",
+                  style: linkStyle,
+                  recognizer: TapGestureRecognizer()..onTap = () {},
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
