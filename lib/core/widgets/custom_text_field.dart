@@ -22,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
+      height: 50,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(7),
@@ -37,9 +38,14 @@ class CustomTextField extends StatelessWidget {
         obscureText: isPassword,
         controller: c,
         decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).hintColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          ),
           hintText: hint,
           hintStyle: TextStyle(color: Colors.black.withAlpha(80)),
-          border: InputBorder.none,
           prefixIconConstraints: const BoxConstraints(
             maxHeight: 20,
             maxWidth: 40,

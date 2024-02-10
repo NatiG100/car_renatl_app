@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
         theme: theme(),
         onGenerateRoute: AppRoutes(context: context).onGenerateRoute,
         builder: (context, child) {
-          _createLoadingOverlay(context);
+          // _createLoadingOverlay(context);
           return child ?? const SizedBox();
         },
       ),
