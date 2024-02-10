@@ -8,6 +8,7 @@ import 'package:car_renatl_app/features/auth/presentation/widgets/logo_header.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_validation/form_validation.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +18,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _formSubmittedOnce = false;
   String _email = "";
   String _password = "";
   bool rememberMe = false;
@@ -35,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  @override
   void initState() {
     _passwordC.addListener(_onPasswordChange);
     _emailC.addListener(_onEmailChange);
@@ -49,22 +52,35 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onLoginPressed() {
-    BlocProvider.of<AuthBloc>(context).add(
-      LoginEvent(
-        UserEntity(
-          emailAddress: _email,
-          password: _password,
+    setState(() {
+      _formSubmittedOnce = true;
+    });
+    if (_formKey.currentState!.validate()) {
+      BlocProvider.of<AuthBloc>(context).add(
+        LoginEvent(
+          UserEntity(
+            emailAddress: _email,
+            password: _password,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   _navigateToRegisterPage() {
     Navigator.of(context).pushNamed('/register');
   }
 
+  final _formKey = GlobalKey<FormState>();
+  AutovalidateMode get _autovalidateMode {
+    return _formSubmittedOnce
+        ? AutovalidateMode.onUserInteraction
+        : AutovalidateMode.disabled;
+  }
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -77,27 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     formTitle(),
-                    CustomTextField(
-                      hint: 'Email',
-                      prefix: 'assets/icons/email.svg',
-                      text: _email,
-                      c: _emailC,
-                    ),
-                    CustomTextField(
-                      hint: 'Password',
-                      prefix: 'assets/icons/password.svg',
-                      isPassword: true,
-                      text: _password,
-                      c: _passwordC,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15, bottom: 15),
-                      child: _loginOptions(context),
-                    ),
-                    CustomButton(
-                      text: "Login",
-                      onPressed: _onLoginPressed,
-                    ),
+                    _loginForm(context),
                     _loginBottomArea(),
                   ],
                 ),
@@ -107,6 +103,53 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+
+  Form _loginForm(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            CustomTextField(
+              hint: 'Email',
+              prefix: 'assets/icons/email.svg',
+              text: _email,
+              c: _emailC,
+              validator: (String? value) {
+                var validator = Validator(validators: [
+                  const EmailValidator(),
+                  const RequiredValidator(),
+                ]);
+                return validator.validate(label: 'Email', value: value);
+              },
+              autovalidateMode: _autovalidateMode,
+            ),
+            CustomTextField(
+              hint: 'Password',
+              prefix: 'assets/icons/password.svg',
+              isPassword: true,
+              text: _password,
+              c: _passwordC,
+              validator: (String? value) {
+                var validator = Validator(validators: [
+                  const RequiredValidator(),
+                  const MinLengthValidator(length: 6)
+                ]);
+                return validator.validate(label: 'Password', value: value);
+              },
+              autovalidateMode: _autovalidateMode,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15, bottom: 15),
+              child: _loginOptions(context),
+            ),
+            CustomButton(
+              text: "Login",
+              onPressed: _onLoginPressed,
+            ),
+          ],
+        ));
   }
 
   Container _loginBottomArea() {

@@ -9,6 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_validation/form_validation.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -18,6 +19,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  bool _formSubmittedOnce = false;
   String _email = "";
   String _fullName = "";
   String _mobileNumber = "";
@@ -83,22 +85,35 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   _onRegisterPressed() {
-    BlocProvider.of<AuthBloc>(context).add(
-      UserRegisterEvent(
-        UserEntity(
-          fullName: _fullName,
-          emailAddress: _email,
-          mobileNumber: _mobileNumber,
-          password: _password,
-          confirmPassword: _confirmPassword,
+    setState(() {
+      _formSubmittedOnce = true;
+    });
+    if (_formKey.currentState!.validate()) {
+      BlocProvider.of<AuthBloc>(context).add(
+        UserRegisterEvent(
+          UserEntity(
+            fullName: _fullName,
+            emailAddress: _email,
+            mobileNumber: _mobileNumber,
+            password: _password,
+            confirmPassword: _confirmPassword,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   _navigateToSignInPage() {
     Navigator.of(context).pushNamed('/login');
   }
+
+  AutovalidateMode get _autovalidateMode {
+    return _formSubmittedOnce
+        ? AutovalidateMode.onUserInteraction
+        : AutovalidateMode.disabled;
+  }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -114,50 +129,100 @@ class _SignUpPageState extends State<SignUpPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     formTitle(),
-                    CustomTextField(
-                      hint: 'Full Name',
-                      prefix: 'assets/icons/user.svg',
-                      text: _fullName,
-                      c: _fullNameC,
-                    ),
-                    CustomTextField(
-                      hint: 'Email',
-                      prefix: 'assets/icons/email.svg',
-                      text: _email,
-                      c: _emailC,
-                    ),
-                    CustomTextField(
-                      hint: 'Mobile Number',
-                      prefix: 'assets/icons/phone.svg',
-                      text: _mobileNumber,
-                      c: _mobileNumberC,
-                    ),
-                    CustomTextField(
-                      hint: 'Password',
-                      prefix: 'assets/icons/password.svg',
-                      isPassword: true,
-                      text: _password,
-                      c: _passwordC,
-                    ),
-                    CustomTextField(
-                      hint: 'Confirm Password',
-                      prefix: 'assets/icons/password.svg',
-                      text: _confirmPassword,
-                      c: _confirmPasswordC,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15, bottom: 15),
-                      child: _legalNoticeSection(context),
-                    ),
-                    CustomButton(
-                      text: "Register",
-                      onPressed: _onRegisterPressed,
-                    ),
+                    _signupForm(context),
                     _loginBottomArea(),
                   ],
                 ),
               ),
             ]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Form _signupForm(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          CustomTextField(
+            hint: 'Full Name',
+            prefix: 'assets/icons/user.svg',
+            text: _fullName,
+            c: _fullNameC,
+            validator: (String? value) {
+              Validator validator = Validator(validators: [
+                const RequiredValidator(),
+              ]);
+              return validator.validate(label: 'Full Name', value: value);
+            },
+            autovalidateMode: _autovalidateMode,
+          ),
+          CustomTextField(
+            hint: 'Email',
+            prefix: 'assets/icons/email.svg',
+            text: _email,
+            c: _emailC,
+            validator: (String? value) {
+              Validator validator = Validator(validators: [
+                const RequiredValidator(),
+                const EmailValidator(),
+              ]);
+              return validator.validate(label: 'email', value: value);
+            },
+            autovalidateMode: _autovalidateMode,
+          ),
+          CustomTextField(
+            hint: 'Mobile Number',
+            prefix: 'assets/icons/phone.svg',
+            text: _mobileNumber,
+            c: _mobileNumberC,
+            validator: (String? value) {
+              Validator validator = Validator(validators: [
+                const RequiredValidator(),
+                const PhoneNumberValidator(),
+              ]);
+              return validator.validate(label: 'Mobile Number', value: value);
+            },
+            autovalidateMode: _autovalidateMode,
+          ),
+          CustomTextField(
+            hint: 'Password',
+            prefix: 'assets/icons/password.svg',
+            isPassword: true,
+            text: _password,
+            c: _passwordC,
+            validator: (String? value) {
+              Validator validator = Validator(validators: [
+                const RequiredValidator(),
+                const MinLengthValidator(length: 6)
+              ]);
+              return validator.validate(label: 'Password', value: value);
+            },
+            autovalidateMode: _autovalidateMode,
+          ),
+          CustomTextField(
+            hint: 'Confirm Password',
+            prefix: 'assets/icons/password.svg',
+            text: _confirmPassword,
+            isPassword: true,
+            c: _confirmPasswordC,
+            validator: (String? value) {
+              if (value != _password) {
+                return "Passwords don't match";
+              }
+              return null;
+            },
+            autovalidateMode: _autovalidateMode,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 15, bottom: 15),
+            child: _legalNoticeSection(context),
+          ),
+          CustomButton(
+            text: "Register",
+            onPressed: _onRegisterPressed,
           ),
         ],
       ),

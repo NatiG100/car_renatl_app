@@ -10,6 +10,8 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.text = "",
     required this.c,
+    this.validator,
+    this.autovalidateMode,
   });
   final String? hint;
   final String? prefix;
@@ -17,27 +19,21 @@ class CustomTextField extends StatelessWidget {
   final bool isPassword;
   final String text;
   final TextEditingController c;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
-      height: 50,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(7),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2,
-            color: Colors.black.withAlpha(20),
-          )
-        ],
-      ),
-      child: TextField(
+      child: TextFormField(
+        autovalidateMode: autovalidateMode,
+        validator: validator,
         style: const TextStyle(fontSize: 20),
         obscureText: isPassword,
         controller: c,
         decoration: InputDecoration(
+          fillColor: Theme.of(context).cardColor,
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).hintColor),
           ),
