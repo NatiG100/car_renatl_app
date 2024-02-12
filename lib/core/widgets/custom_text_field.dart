@@ -13,6 +13,8 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.autovalidateMode,
     this.textInputType,
+    this.onChanged,
+    this.onSaved,
   });
   final String? hint;
   final String? prefix;
@@ -23,18 +25,22 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
   final TextInputType? textInputType;
+  final void Function(String)? onChanged;
+  final void Function(String?)? onSaved;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: TextFormField(
+        onChanged: onChanged,
         keyboardType: textInputType,
         autovalidateMode: autovalidateMode,
         validator: validator,
         style: const TextStyle(fontSize: 16),
         obscureText: isPassword,
         controller: c,
+        onSaved: onSaved,
         decoration: InputDecoration(
           fillColor: Theme.of(context).cardColor,
           border: OutlineInputBorder(

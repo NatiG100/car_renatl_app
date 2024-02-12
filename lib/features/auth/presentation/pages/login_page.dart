@@ -5,6 +5,7 @@ import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/widgets/logo_header.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,28 +20,21 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _formSubmittedOnce = false;
-  String _email = "";
-  String _password = "";
+
   bool _rememberMe = false;
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passwordC = TextEditingController();
-  _onPasswordChange() {
-    setState(() {
-      _password = _passwordC.text;
-    });
-  }
-
-  _onEmailChange() {
-    setState(() {
-      _email = _emailC.text;
-    });
+  _onInputFieldChange(String value) {
+    EasyDebounce.debounce(
+      'save-sign-up-debouncer',
+      const Duration(milliseconds: 500),
+      _formKey.currentState!.save,
+    );
   }
 
   @override
   @override
   void initState() {
-    _passwordC.addListener(_onPasswordChange);
-    _emailC.addListener(_onEmailChange);
     super.initState();
   }
 
@@ -59,8 +53,8 @@ class _LoginPageState extends State<LoginPage> {
       BlocProvider.of<AuthBloc>(context).add(
         LoginEvent(
           UserEntity(
-            emailAddress: _email,
-            password: _password,
+            emailAddress: _emailC.text,
+            password: _passwordC.text,
           ),
         ),
       );
@@ -120,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
             CustomTextField(
               hint: 'Email',
               prefix: 'assets/icons/email.svg',
-              text: _email,
+              // text: _email,
               c: _emailC,
               validator: (String? value) {
                 var validator = Validator(validators: [
@@ -131,12 +125,13 @@ class _LoginPageState extends State<LoginPage> {
               },
               autovalidateMode: _autovalidateMode,
               textInputType: TextInputType.emailAddress,
+              onChanged: _onInputFieldChange,
             ),
             CustomTextField(
               hint: 'Password',
               prefix: 'assets/icons/password.svg',
               isPassword: true,
-              text: _password,
+              // text: _password,
               c: _passwordC,
               validator: (String? value) {
                 var validator = Validator(validators: [
@@ -146,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                 return validator.validate(label: 'Password', value: value);
               },
               autovalidateMode: _autovalidateMode,
+              onChanged: _onInputFieldChange,
             ),
             Container(
               margin: const EdgeInsets.only(top: 15, bottom: 15),
