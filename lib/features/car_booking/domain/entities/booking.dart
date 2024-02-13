@@ -19,7 +19,7 @@ class BookingEntity extends Equatable {
   final Car? car;
   final String? userId;
   final String? paymentMethod;
-  final String? createdAt;
+  final DateTime? createdAt;
 
   @override
   List<Object?> get props => [
