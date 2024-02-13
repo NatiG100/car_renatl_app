@@ -3,11 +3,10 @@ import 'package:car_renatl_app/features/car_booking/domain/entities/booking.dart
 import 'package:car_renatl_app/features/car_booking/domain/repositories/booking_repository.dart';
 
 class MockBookingRepository implements BookingRepository {
-  List<BookingEntity> remoteBookings = [];
-  List<BookingEntity> localBookings = [];
+  List<BookingEntity> bookings = [];
   @override
   Future<DataState<BookingEntity>> booking(String id) {
-    var booking = remoteBookings.where((element) => element.id == id).first;
+    var booking = bookings.where((element) => element.id == id).first;
     return Future.delayed(
         const Duration(milliseconds: 500), () => DataSuccess(data: booking));
   }
@@ -15,7 +14,7 @@ class MockBookingRepository implements BookingRepository {
   @override
   Future<DataState<BookingEntity>> createBooking(BookingEntity booking) {
     return Future.delayed(const Duration(milliseconds: 500), () {
-      remoteBookings.add(booking);
+      bookings.add(booking);
       return DataSuccess(data: booking);
     });
   }
@@ -23,6 +22,6 @@ class MockBookingRepository implements BookingRepository {
   @override
   Future<DataState<List<BookingEntity>>> myBookings() {
     return Future.delayed(const Duration(milliseconds: 500),
-        () => DataSuccess(data: remoteBookings));
+        () => DataSuccess(data: bookings));
   }
 }

@@ -8,6 +8,6 @@ class GetSavedCarsUseCase extends UseCase<DataState<List<CarEntity>>, void> {
   GetSavedCarsUseCase(this._carRepository);
   @override
   Future<DataState<List<CarEntity>>> call({void params}) {
-    return _carRepository.savedCars();
+    return _carRepository.getSavedCars();
   }
 }
