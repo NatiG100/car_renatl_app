@@ -21,56 +21,16 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool _agree = false;
   bool _formSubmittedOnce = false;
-  String _email = "";
-  String _fullName = "";
-  String _mobileNumber = "";
-  String _password = "";
-  String _confirmPassword = "";
   bool agreed = false;
   final TextEditingController _fullNameC = TextEditingController();
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _mobileNumberC = TextEditingController();
   final TextEditingController _passwordC = TextEditingController();
   final TextEditingController _confirmPasswordC = TextEditingController();
-  _onPasswordChange() {
-    setState(() {
-      _password = _passwordC.text;
-    });
-  }
-
-  _onEmailChange() {
-    setState(() {
-      _email = _emailC.text;
-    });
-  }
-
-  _onFullNameChange() {
-    setState(() {
-      _fullName = _fullNameC.text;
-    });
-  }
-
-  _onMobileNumberChange() {
-    setState(() {
-      _mobileNumber = _mobileNumberC.text;
-    });
-  }
-
-  _onConFirmPasswordChange() {
-    setState(() {
-      _confirmPassword = _confirmPasswordC.text;
-    });
-  }
 
   @override
   @override
   void initState() {
-    _fullNameC.addListener(_onFullNameChange);
-    _emailC.addListener(_onEmailChange);
-    _mobileNumberC.addListener(_onMobileNumberChange);
-    _passwordC.addListener(_onPasswordChange);
-    _confirmPasswordC.addListener(_onConFirmPasswordChange);
-
     super.initState();
   }
 
@@ -93,11 +53,11 @@ class _SignUpPageState extends State<SignUpPage> {
       BlocProvider.of<AuthBloc>(context).add(
         UserRegisterEvent(
           UserEntity(
-            fullName: _fullName,
-            emailAddress: _email,
-            mobileNumber: _mobileNumber,
-            password: _password,
-            confirmPassword: _confirmPassword,
+            fullName: _fullNameC.text,
+            emailAddress: _emailC.text,
+            mobileNumber: _mobileNumberC.text,
+            password: _passwordC.text,
+            confirmPassword: _confirmPasswordC.text,
           ),
         ),
       );
@@ -156,7 +116,6 @@ class _SignUpPageState extends State<SignUpPage> {
           CustomTextField(
             hint: 'Full Name',
             prefix: 'assets/icons/user.svg',
-            text: _fullName,
             c: _fullNameC,
             validator: (String? value) {
               Validator validator = Validator(validators: [
@@ -169,7 +128,6 @@ class _SignUpPageState extends State<SignUpPage> {
           CustomTextField(
             hint: 'Email',
             prefix: 'assets/icons/email.svg',
-            text: _email,
             c: _emailC,
             validator: (String? value) {
               Validator validator = Validator(validators: [
@@ -184,7 +142,6 @@ class _SignUpPageState extends State<SignUpPage> {
           CustomTextField(
             hint: 'Mobile Number',
             prefix: 'assets/icons/phone.svg',
-            text: _mobileNumber,
             c: _mobileNumberC,
             validator: (String? value) {
               Validator validator = Validator(validators: [
@@ -200,7 +157,6 @@ class _SignUpPageState extends State<SignUpPage> {
             hint: 'Password',
             prefix: 'assets/icons/password.svg',
             isPassword: true,
-            text: _password,
             c: _passwordC,
             validator: (String? value) {
               Validator validator = Validator(validators: [
@@ -214,11 +170,10 @@ class _SignUpPageState extends State<SignUpPage> {
           CustomTextField(
             hint: 'Confirm Password',
             prefix: 'assets/icons/password.svg',
-            text: _confirmPassword,
             isPassword: true,
             c: _confirmPasswordC,
             validator: (String? value) {
-              if (value != _password) {
+              if (value != _passwordC.text) {
                 return "Passwords don't match";
               }
               return null;

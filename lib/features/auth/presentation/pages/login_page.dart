@@ -5,7 +5,6 @@ import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/widgets/logo_header.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,13 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   bool _rememberMe = false;
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passwordC = TextEditingController();
-  _onInputFieldChange(String value) {
-    EasyDebounce.debounce(
-      'save-sign-up-debouncer',
-      const Duration(milliseconds: 500),
-      _formKey.currentState!.save,
-    );
-  }
+  // _onInputFieldChange(String value) {
+  //   EasyDebounce.debounce(
+  //     'save-sign-up-debouncer',
+  //     const Duration(milliseconds: 500),
+  //     _formKey.currentState!.save,
+  //   );
+  // }
 
   @override
   @override
@@ -125,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
               },
               autovalidateMode: _autovalidateMode,
               textInputType: TextInputType.emailAddress,
-              onChanged: _onInputFieldChange,
             ),
             CustomTextField(
               hint: 'Password',
@@ -141,7 +139,6 @@ class _LoginPageState extends State<LoginPage> {
                 return validator.validate(label: 'Password', value: value);
               },
               autovalidateMode: _autovalidateMode,
-              onChanged: _onInputFieldChange,
             ),
             Container(
               margin: const EdgeInsets.only(top: 15, bottom: 15),
