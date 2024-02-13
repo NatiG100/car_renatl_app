@@ -1,9 +1,9 @@
-import 'package:car_renatl_app/features/car_booking/domain/entities/car/car_feature.dart';
-import 'package:car_renatl_app/features/car_booking/domain/entities/car/price_deal.dart';
+import 'package:car_renatl_app/features/car/domain/entities/car_feature.dart';
+import 'package:car_renatl_app/features/car/domain/entities/price_deal.dart';
 import 'package:equatable/equatable.dart';
 
-class Car extends Equatable {
-  const Car({
+class CarEntity extends Equatable {
+  const CarEntity({
     this.id,
     this.brand,
     this.model,
@@ -43,22 +43,4 @@ class Car extends Equatable {
         priceDeal,
         priceDeal,
       ];
-
-  @override
-  String toString() {
-    return """"Car(
-  id: $id,
-  average rating: $avgRating,
-  total ratings: $totalRatings,
-  brand: $brand,
-  description: $description,
-  features: $features,
-  gallary: $gallary,
-  imgUrl: $imgUrl,
-  location: $location,
-  model: $model,
-  price deal: $priceDeal,
-  price / day$pricePerDay,
-)""";
-  }
 }

@@ -12,13 +12,4 @@ class PaymentMethod extends Equatable {
         name,
         description,
       ];
-
-  @override
-  String toString(){
-    return """"PaymentMethod(
-  id: $id, 
-  name: $name, 
-  description: $description, 
-)""";
-  }
 }

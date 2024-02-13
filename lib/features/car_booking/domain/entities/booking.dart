@@ -1,4 +1,4 @@
-import 'package:car_renatl_app/features/car_booking/domain/entities/car/car.dart';
+import 'package:car_renatl_app/features/car/domain/entities/car.dart';
 import 'package:equatable/equatable.dart';
 
 class BookingEntity extends Equatable {
@@ -16,7 +16,7 @@ class BookingEntity extends Equatable {
   final String? pickupLocation;
   final DateTime? startTrip;
   final DateTime? endTrip;
-  final Car? car;
+  final CarEntity? car;
   final String? userId;
   final String? paymentMethod;
   final DateTime? createdAt;

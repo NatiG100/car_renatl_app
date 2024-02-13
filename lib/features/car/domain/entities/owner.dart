@@ -22,14 +22,4 @@ class Owner extends Equatable {
         phoneNumber,
         profileUrl,
       ];
-  @override
-  String toString() {
-    return """"Owner(
-  id: $id, 
-  full name: $fullName, 
-  address: $address, 
-  phone number: $phoneNumber,
-  profile URL: $profileUrl,
-)""";
-  }
 }

@@ -8,14 +8,4 @@ class PriceDeal extends Equatable {
   final String? pricePerDay;
   @override
   List<Object?> get props => [id, title, description, pricePerDay];
-
-  @override
-  String toString() {
-    return """"PriceDeal(
-  id: $id, 
-  title: $title, 
-  description: $description, 
-  price/day: $pricePerDay
-)""";
-  }
 }
