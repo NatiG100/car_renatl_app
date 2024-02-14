@@ -2,6 +2,14 @@ import 'package:car_renatl_app/config/routes/routes.dart';
 import 'package:car_renatl_app/config/theme/app_theme.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
+import 'package:car_renatl_app/features/car/presentation/bloc/local/local_car_bloc.dart';
+import 'package:car_renatl_app/features/car/presentation/bloc/local/local_car_event.dart';
+import 'package:car_renatl_app/features/car/presentation/bloc/remote/hot_deals/hot_deals_bloc.dart';
+import 'package:car_renatl_app/features/car/presentation/bloc/remote/hot_deals/hot_deals_event.dart';
+import 'package:car_renatl_app/features/car/presentation/bloc/remote/remote_car_bloc.dart';
+import 'package:car_renatl_app/features/car/presentation/bloc/remote/remote_car_event.dart';
+import 'package:car_renatl_app/features/car_booking/presentation/bloc/booking_bloc.dart';
+import 'package:car_renatl_app/features/car_booking/presentation/bloc/booking_event.dart';
 import 'package:car_renatl_app/features/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,8 +50,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (context) => sl()..add(WhoAmIevent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => sl()..add(WhoAmIevent()),
+        ),
+        BlocProvider<LocalCarsBloc>(
+          create: (context) => sl()..add(const GetSavedCars()),
+        ),
+        BlocProvider<RemoteCarsBloc>(
+          create: (context) => sl()..add(const FetchRemoteCarsEvent()),
+        ),
+        BlocProvider<BookingBloc>(
+          create: (context) => sl()..add(const FetchBookingsEvent()),
+        ),
+        BlocProvider<HotDealsBloc>(
+          create: (context) => sl()..add(const FetchHotDealsEvent()),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: theme(),

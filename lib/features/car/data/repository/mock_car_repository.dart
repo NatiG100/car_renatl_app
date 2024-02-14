@@ -10,7 +10,9 @@ class MockCarRepository implements CarRepository {
   @override
   Future<DataState<List<CarEntity>>> getCars() {
     return Future.delayed(
-        const Duration(milliseconds: 500), () => DataSuccess(data: cars));
+      const Duration(milliseconds: 500),
+      () => DataSuccess(data: cars),
+    );
   }
 
   @override
@@ -54,6 +56,14 @@ class MockCarRepository implements CarRepository {
         message: "successfully removed",
         title: "Success",
       ),
+    );
+  }
+
+  @override
+  Future<DataState<List<CarEntity>>> hotDeals() {
+    return Future.delayed(
+      const Duration(milliseconds: 500),
+      () => DataSuccess(data: cars),
     );
   }
 }

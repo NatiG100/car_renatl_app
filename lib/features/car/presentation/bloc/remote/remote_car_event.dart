@@ -1,7 +1,7 @@
-abstract class RemoteCarsEvent{
+abstract class RemoteCarsEvent {
   const RemoteCarsEvent();
 }
 
-class FetchRemtoeCarsEvent extends RemoteCarsEvent{
-  const FetchRemtoeCarsEvent();
+class FetchRemoteCarsEvent extends RemoteCarsEvent {
+  const FetchRemoteCarsEvent();
 }

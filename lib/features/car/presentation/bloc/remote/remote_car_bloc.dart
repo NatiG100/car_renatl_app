@@ -7,11 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RemoteCarsBloc extends Bloc<RemoteCarsEvent, RemoteCarsState> {
   final GetCarsUseCase _getCarsUseCase;
   RemoteCarsBloc(this._getCarsUseCase) : super(const RemoteCarsLoading()) {
-    on<FetchRemtoeCarsEvent>(onFetchRemoteCars);
+    on<FetchRemoteCarsEvent>(onFetchRemoteCars);
   }
 
   void onFetchRemoteCars(
-    FetchRemtoeCarsEvent event,
+    FetchRemoteCarsEvent event,
     Emitter<RemoteCarsState> emit,
   ) async {
     emit(const RemoteCarsLoading());
