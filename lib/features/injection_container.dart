@@ -7,11 +7,15 @@ import 'package:car_renatl_app/features/auth/domain/usecases/register_user.dart'
 import 'package:car_renatl_app/features/auth/domain/usecases/verify_user.dart';
 import 'package:car_renatl_app/features/auth/domain/usecases/who_am_i.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
+import 'package:car_renatl_app/features/car/data/repository/mock_car_repository.dart';
+import 'package:car_renatl_app/features/car/domain/repository/car_repository.dart';
+import 'package:car_renatl_app/features/car/domain/usecases/get_cars.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  ////////////////////////// Auth Section ////////////////////////
   //inject the repository
   sl.registerSingleton<UserRepository>(MockUserRepository());
 
@@ -35,4 +39,9 @@ Future<void> initializeDependencies() async {
       sl(),
     ),
   );
+
+  /////////////////// Cars Section ///////////////////////
+  sl.registerSingleton<CarRepository>(MockCarRepository());
+  //use cases
+  sl.registerSingleton<GetCarsUseCase>(GetCarsUseCase(sl()));
 }

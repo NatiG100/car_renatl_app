@@ -1,14 +1,13 @@
-import 'package:car_renatl_app/core/dto/message.dart';
+import 'package:car_renatl_app/core/resources/data_state.dart';
 import 'package:car_renatl_app/core/usecases/usecase.dart';
 import 'package:car_renatl_app/features/car/domain/entities/car.dart';
 import 'package:car_renatl_app/features/car/domain/repository/car_repository.dart';
 
-class SaveCarUseCase extends UseCase<ResponseMessage, CarEntity> {
+class GetCarsUseCase extends UseCase<DataState<List<CarEntity>>, void> {
   final CarRepository _carRepository;
-  SaveCarUseCase(this._carRepository);
-
+  GetCarsUseCase(this._carRepository);
   @override
-  Future<ResponseMessage> call({CarEntity? params}) {
-    return _carRepository.saveCar(params!);
+  Future<DataState<List<CarEntity>>> call({void params}) {
+    return _carRepository.getCars();
   }
 }

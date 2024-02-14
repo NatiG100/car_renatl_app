@@ -14,50 +14,45 @@ class MockCarRepository implements CarRepository {
   }
 
   @override
-  Future<DataState<List<CarEntity>>> getSavedCars() {
-    return Future.delayed(
-        const Duration(milliseconds: 500), () => DataSuccess(data: savedCars));
+  Future<List<CarEntity>> getSavedCars() {
+    return Future.delayed(const Duration(milliseconds: 500), () => savedCars);
   }
 
   @override
-  Future<DataState<ResponseMessage>> removeCar(String id) {
+  Future<ResponseMessage> removeCar(String id) {
     savedCars.removeWhere((element) => element.id == id);
     return Future.delayed(
-        const Duration(milliseconds: 500),
-        () => DataSuccess(
-                data: ResponseMessage(
-              id: "1",
-              message: "successfully removed",
-              title: "Success",
-            )));
-  }
-
-  @override
-  Future<DataState<ResponseMessage>> removeCars(List<String> ids) {
-    savedCars.removeWhere((element) => ids.contains(element.id));
-    return Future.delayed(
       const Duration(milliseconds: 500),
-      () => DataSuccess(
-        data: ResponseMessage(
-          id: "1",
-          message: "successfully removed",
-          title: "Success",
-        ),
+      () => ResponseMessage(
+        id: "1",
+        message: "successfully removed",
+        title: "Success",
       ),
     );
   }
 
   @override
-  Future<DataState<ResponseMessage>> saveCar(CarEntity car) {
+  Future<ResponseMessage> removeCars(List<String> ids) {
+    savedCars.removeWhere((element) => ids.contains(element.id));
+    return Future.delayed(
+      const Duration(milliseconds: 500),
+      () => ResponseMessage(
+        id: "1",
+        message: "successfully removed",
+        title: "Success",
+      ),
+    );
+  }
+
+  @override
+  Future<ResponseMessage> saveCar(CarEntity car) {
     savedCars.add(car);
     return Future.delayed(
       const Duration(milliseconds: 500),
-      () => DataSuccess(
-        data: ResponseMessage(
-          id: "1",
-          message: "successfully removed",
-          title: "Success",
-        ),
+      () => ResponseMessage(
+        id: "1",
+        message: "successfully removed",
+        title: "Success",
       ),
     );
   }

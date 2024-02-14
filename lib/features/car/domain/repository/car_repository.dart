@@ -4,8 +4,9 @@ import 'package:car_renatl_app/features/car/domain/entities/car.dart';
 
 abstract class CarRepository {
   Future<DataState<List<CarEntity>>> getCars();
-  Future<DataState<List<CarEntity>>> getSavedCars();
-  Future<DataState<ResponseMessage>> saveCar(CarEntity car);
-  Future<DataState<ResponseMessage>> removeCar(String id);
-  Future<DataState<ResponseMessage>> removeCars(List<String> ids);
+
+  Future<List<CarEntity>> getSavedCars();
+  Future<ResponseMessage> saveCar(CarEntity car);
+  Future<ResponseMessage> removeCar(String id);
+  Future<ResponseMessage> removeCars(List<String> ids);
 }
