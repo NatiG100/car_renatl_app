@@ -21,7 +21,7 @@ class _VerifyPageState extends State<VerifyPage> {
       BlocProvider.of<AuthBloc>(context).add(
         ActivateEvent(_code),
       );
-      Navigator.of(context).pushNamed('/home');
+      Navigator.of(context).pushReplacementNamed('/home');
     }
   }
 
