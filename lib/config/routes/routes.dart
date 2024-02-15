@@ -1,6 +1,7 @@
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
 import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_state.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/login_page.dart';
+import 'package:car_renatl_app/features/auth/presentation/pages/profile_page.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/verify_page.dart';
 import 'package:car_renatl_app/features/car_booking/presentation/pages/start_booking_page.dart';
@@ -14,6 +15,10 @@ class AppRoutes {
     switch (settings.name) {
       case '/register':
         return _materialRoute(_authRender(context, const SignUpPage()));
+      case '/profile':
+        return _materialRoute(_authRender(context, const ProfilePage()));
+      case '/home':
+        return _materialRoute(_authRender(context, const StartBookingPage()));
       default:
         return _materialRoute(_authRender(context, const LoginPage()));
     }
@@ -36,7 +41,7 @@ class AppRoutes {
           return page;
         }
         if (state is RemoteAuthLoggedIn) {
-          return const StartBookingPage();
+          return page;
         }
         return const SizedBox();
       },

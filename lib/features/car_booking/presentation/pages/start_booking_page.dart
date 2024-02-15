@@ -1,7 +1,6 @@
+import 'package:car_renatl_app/core/widgets/bottom_navigation.dart';
 import 'package:car_renatl_app/core/widgets/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class StartBookingPage extends StatefulWidget {
   const StartBookingPage({super.key});
@@ -16,23 +15,7 @@ class _StartBookingPageState extends State<StartBookingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.car_rental),
-            label: "My Booking",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "My Profile",
-          ),
-        ],
-      ),
+      bottomNavigationBar: const AppBottomNavigation(),
       body: CustomScrollView(
         slivers: [
           SliverList(
@@ -42,8 +25,9 @@ class _StartBookingPageState extends State<StartBookingPage> {
                 _startBookingForm(context),
                 Container(
                   height: 45,
-                  child:
-                      Container(decoration: BoxDecoration(color: Colors.red)),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.red),
+                  ),
                 )
               ],
             ),
