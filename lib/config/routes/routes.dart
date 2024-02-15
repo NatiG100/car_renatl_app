@@ -3,6 +3,7 @@ import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_
 import 'package:car_renatl_app/features/auth/presentation/pages/login_page.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:car_renatl_app/features/auth/presentation/pages/verify_page.dart';
+import 'package:car_renatl_app/features/car_booking/presentation/pages/start_booking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +36,7 @@ class AppRoutes {
           return page;
         }
         if (state is RemoteAuthLoggedIn) {
-          return const Text("Main page");
+          return const StartBookingPage();
         }
         return const SizedBox();
       },
