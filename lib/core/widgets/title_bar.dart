@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TitleBar extends StatelessWidget {
-  const TitleBar({
+class CustomTitleBar extends StatelessWidget {
+  const CustomTitleBar({
     super.key,
     this.navigatesToBack = true,
     required this.title,
@@ -23,12 +23,10 @@ class TitleBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(
+          BackButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: const Icon(Icons.arrow_back),
-            iconSize: 22,
           ),
           const Expanded(
             child: Text(
