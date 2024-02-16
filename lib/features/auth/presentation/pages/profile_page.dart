@@ -52,6 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Card _profileHeader(RemoteAuthState state, BuildContext context) {
+    
     return Card(
       child: Container(
         padding: const EdgeInsets.all(15),
