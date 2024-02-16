@@ -37,8 +37,18 @@ class AppRoutes {
         if (state is RemoteAuthInactive) {
           return const VerifyPage();
         }
-        if (state is RemoteAuthLoggedOut || state is RemoteAuthLoading) {
+        if (state is RemoteAuthLoggedOut) {
+          if (!(page is LoginPage ||
+              page is SignUpPage ||
+              page is VerifyPage)) {
+            return const LoginPage();
+          }
           return page;
+        }
+        if (state is RemoteAuthLoading) {
+          return const Scaffold(
+            body: Center(child: RefreshProgressIndicator()),
+          );
         }
         if (state is RemoteAuthLoggedIn) {
           return page;

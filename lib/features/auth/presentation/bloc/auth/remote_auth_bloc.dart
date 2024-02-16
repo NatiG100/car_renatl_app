@@ -96,7 +96,9 @@ class AuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
         case false:
           emit(RemoteAuthInactive(dataState.data!));
           break;
+        //TODO: the following condition must emit error state
         case null:
+          emit(RemoteAuthLoggedIn(dataState.data!));
           break;
       }
     }
