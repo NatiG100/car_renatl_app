@@ -1,7 +1,6 @@
 import 'package:car_renatl_app/core/dto/message.dart';
 import 'package:car_renatl_app/core/resources/data_state.dart';
-import 'package:car_renatl_app/features/auth/domain/entities/user.dart';
-import 'package:car_renatl_app/features/auth/domain/repository/user_repository.dart';
+import 'package:car_renatl_app/features/auth/domain/auth_domain.dart';
 import 'package:dio/dio.dart';
 
 class MockUserRepository implements UserRepository {

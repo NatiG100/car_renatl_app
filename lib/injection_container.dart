@@ -1,12 +1,4 @@
-import 'package:car_renatl_app/features/auth/data/repository/mock_user_repository.dart';
-import 'package:car_renatl_app/features/auth/domain/repository/user_repository.dart';
-import 'package:car_renatl_app/features/auth/domain/usecases/change_user_profile.dart';
-import 'package:car_renatl_app/features/auth/domain/usecases/login.dart';
-import 'package:car_renatl_app/features/auth/domain/usecases/logout_user.dart';
-import 'package:car_renatl_app/features/auth/domain/usecases/register_user.dart';
-import 'package:car_renatl_app/features/auth/domain/usecases/verify_user.dart';
-import 'package:car_renatl_app/features/auth/domain/usecases/who_am_i.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
+import 'package:car_renatl_app/features/auth/auth.dart';
 import 'package:car_renatl_app/features/car/data/repository/mock_car_repository.dart';
 import 'package:car_renatl_app/features/car/domain/repository/car_repository.dart';
 import 'package:car_renatl_app/features/car/domain/usecases/get_cars.dart';

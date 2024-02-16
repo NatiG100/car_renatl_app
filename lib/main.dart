@@ -1,12 +1,11 @@
 import 'package:car_renatl_app/config/routes/routes.dart';
 import 'package:car_renatl_app/config/theme/app_theme.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_event.dart';
-import 'package:car_renatl_app/features/auth/presentation/bloc/auth/remote_auth_bloc.dart';
+import 'package:car_renatl_app/features/auth/presentation/auth_presentation.dart';
 import 'package:car_renatl_app/features/car/presentation/bloc/local/local_car_bloc.dart';
 import 'package:car_renatl_app/features/car/presentation/bloc/remote/hot_deals/hot_deals_bloc.dart';
 import 'package:car_renatl_app/features/car/presentation/bloc/remote/remote_car_bloc.dart';
 import 'package:car_renatl_app/features/car_booking/presentation/bloc/booking_bloc.dart';
-import 'package:car_renatl_app/features/injection_container.dart';
+import 'package:car_renatl_app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
