@@ -1,7 +1,6 @@
 import 'package:car_renatl_app/core/dto/message.dart';
 import 'package:car_renatl_app/core/resources/data_state.dart';
-import 'package:car_renatl_app/features/car/domain/entities/car.dart';
-import 'package:car_renatl_app/features/car/domain/repository/car_repository.dart';
+import 'package:car_renatl_app/features/car/domain/car_domain.dart';
 
 class MockCarRepository implements CarRepository {
   List<CarEntity> cars = [];

@@ -1,15 +1,5 @@
 import 'package:car_renatl_app/features/auth/auth.dart';
-import 'package:car_renatl_app/features/car/data/repository/mock_car_repository.dart';
-import 'package:car_renatl_app/features/car/domain/repository/car_repository.dart';
-import 'package:car_renatl_app/features/car/domain/usecases/get_cars.dart';
-import 'package:car_renatl_app/features/car/domain/usecases/get_saved_cars.dart';
-import 'package:car_renatl_app/features/car/domain/usecases/hot_deals.dart';
-import 'package:car_renatl_app/features/car/domain/usecases/remove_car.dart';
-import 'package:car_renatl_app/features/car/domain/usecases/remove_cars.dart';
-import 'package:car_renatl_app/features/car/domain/usecases/save_car.dart';
-import 'package:car_renatl_app/features/car/presentation/bloc/local/local_car_bloc.dart';
-import 'package:car_renatl_app/features/car/presentation/bloc/remote/hot_deals/hot_deals_bloc.dart';
-import 'package:car_renatl_app/features/car/presentation/bloc/remote/remote_car_bloc.dart';
+import 'package:car_renatl_app/features/car/cart.dart';
 import 'package:car_renatl_app/features/car_booking/data/repository/mock_booking_repository.dart';
 import 'package:car_renatl_app/features/car_booking/domain/repositories/booking_repository.dart';
 import 'package:car_renatl_app/features/car_booking/domain/usecases/create_booking.dart';
