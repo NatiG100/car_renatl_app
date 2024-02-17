@@ -1,11 +1,6 @@
 import 'package:car_renatl_app/features/auth/auth.dart';
-import 'package:car_renatl_app/features/car/cart.dart';
-import 'package:car_renatl_app/features/car_booking/data/repository/mock_booking_repository.dart';
-import 'package:car_renatl_app/features/car_booking/domain/repositories/booking_repository.dart';
-import 'package:car_renatl_app/features/car_booking/domain/usecases/create_booking.dart';
-import 'package:car_renatl_app/features/car_booking/domain/usecases/get_booking.dart';
-import 'package:car_renatl_app/features/car_booking/domain/usecases/my_bookings.dart';
-import 'package:car_renatl_app/features/car_booking/presentation/bloc/booking_bloc.dart';
+import 'package:car_renatl_app/features/car/car.dart';
+import 'package:car_renatl_app/features/car_booking/car_booking.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
